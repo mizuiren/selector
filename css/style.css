@@ -1,0 +1,30 @@
+#q-select-box .q-select-list .item {
+	cursor: pointer;
+	padding: 2px 6px;
+	box-sizing: border-box;
+	font-size: 14px;
+	word-break: keep-all;
+}
+#q-select-box .q-select-list .item:hover, #q-select-box .q-select-list .item.selected {
+	background: rgb(230, 247, 255);
+	color: rgb(32, 148, 255);
+}
+#q-select-box .q-select-list {
+	border: 1px solid #ccc;
+	margin-top: 2px;
+	background: #fff;
+}
+#q-select-box .q-select-input-box {
+	position: relative;
+}
+#q-select-box .q-select-input-box span.icon {
+	position: absolute;
+    border-left: 1px solid rgb(88, 161, 195);
+    width: 6px;
+    height: 6px;
+    border-top: 1px solid rgb(88, 161, 195);
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    cursor: pointer;
+}
