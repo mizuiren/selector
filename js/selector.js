@@ -4,14 +4,15 @@
 	 * [description]
 	 * @return {[type]} [description]
 	 */
-	function resetPosition() {
-		var $select = $('select.isSelecting').eq(0);
-		var screenHeight = $(window).height(), screenWidth = $(window).width(), scrollTop = $(document).scrollTop(), scrollLeft = $(document).scrollLeft();
+	function resetPosition(recurrence) {
 		var $container = $('#q-select-box');
+		var $select = $('select.isSelecting').eq(0);
+		var $list = $('.q-select-list', $container);
+		var screenHeight = $(window).height(), screenWidth = $(window).width(), scrollTop = $(document).scrollTop(), scrollLeft = $(document).scrollLeft();
+		
 		var positionX = $select.offset().left, positionY = $select.offset().top;
 		var height = $select.outerHeight();
 		var boxWidth = $container.outerWidth(), boxHeight = $container.outerHeight();
-		console.log(scrollTop)
 		if(boxHeight + positionY + height > screenHeight + scrollTop) {
 			$container.css({
 				'top': (positionY - scrollTop - boxHeight) + 'px'
@@ -20,6 +21,13 @@
 				'position': 'absolute',
 				'bottom': -(height + 2) + 'px'
 			});
+			if(!recurrence) {
+				if(positionY - boxHeight < scrollTop) {
+					$list.css('max-height', positionY - scrollTop);
+				}
+				resetPosition(true);
+			}
+			
 		} else {
 			$container.css({
 				'top': (positionY - scrollTop + height) + 'px'
@@ -122,7 +130,6 @@
 				}
 				$select.val(values.join(',')).trigger('change');
 				$('.q-select-input', $box).val(texts.join(','));
-				console.log($select[0].style.width)
 				if(!$select[0].style.width) {
 					var newSelectWidth = $select.outerWidth(); 
 					$('.q-select-input', $box).width(newSelectWidth - 16);
