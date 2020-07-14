@@ -9,4 +9,4 @@
 
 notice: 使用之前需要确保所选元素在页面存在，如果是页面selector动态生成的，需要生成后再调用
 
-author blog: 秋叶博客[http://www.mizuiren.com](http://www.mizuiren.com)
+author blog: 秋叶博客[https://www.mizuiren.com](https://www.mizuiren.com)
