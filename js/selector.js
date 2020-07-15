@@ -111,7 +111,9 @@
 				var $select = $('select.isSelecting');
 				var $box = $('#q-select-box');
 				if($(this).hasClass('selected')) {
-					$(this).removeClass('selected');
+					if($select.attr('multiselect')) {
+						$(this).removeClass('selected');
+					}			
 				} else {
 					if($select.attr('multiselect') === undefined) {
 						$('.q-select-list', $box).find('.item').removeClass('selected');
