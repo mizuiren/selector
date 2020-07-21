@@ -86,7 +86,7 @@
 						}
 					});
 					if(!$(this).hasClass('q-select-add') && $(this).css('display') !== 'none') {
-						$list.append('<div class="' + _class.join(' ') + '" value="' + value + '">' + $(this).text() + '</div>');
+						$list.append('<div class="' + _class.join(' ') + '" value="' + value + '" title="'+$(this).text()+'">' + $(this).text() + '</div>');
 					} else {
 						multiVal = value;
 					}
