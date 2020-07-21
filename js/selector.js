@@ -11,7 +11,7 @@
 		var screenHeight = $(window).height(), screenWidth = $(window).width(), scrollTop = $(document).scrollTop(), scrollLeft = $(document).scrollLeft();
 		
 		var positionX = $select.offset().left, positionY = $select.offset().top;
-		var height = $select.outerHeight();
+		var height = $select.outerHeight(), width = $select.outerWidth();
 		var boxWidth = $container.outerWidth(), boxHeight = $container.outerHeight();
 		if(boxHeight + positionY + height > screenHeight + scrollTop) {
 			$container.css({
@@ -39,9 +39,11 @@
 			
 		}
 		if(boxWidth + positionX > screenWidth + scrollLeft) {
+			$('#q-select-box').css('width', boxWidth + 'px');
 			$container.css({
-				'left': (positionX - scrollLeft - boxWidth) + 'px'
+				'left': (positionX - scrollLeft - boxWidth + width) + 'px'
 			});
+			
 			$('.q-select-input-box', $container).css({
 				'float': 'right',
 			});
