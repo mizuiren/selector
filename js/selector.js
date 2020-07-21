@@ -113,7 +113,7 @@
 				if($(this).hasClass('selected')) {
 					if($select.attr('multiselect')) {
 						$(this).removeClass('selected');
-					}			
+					}
 				} else {
 					if($select.attr('multiselect') === undefined) {
 						$('.q-select-list', $box).find('.item').removeClass('selected');
@@ -143,7 +143,7 @@
 					e.stopPropagation();
 				}
 			}).on('mousedown.select', function(e) {
-				if(!$(e.target).hasClass('q-select-input')) {
+				if(!$(e.target).hasClass('q-select-input') && !$(e.target).hasClass('q-select-list')) {
 					setTimeout(function() {
 						clearSelecting();
 					});
