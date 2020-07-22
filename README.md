@@ -18,6 +18,8 @@
 
 使用：$('select').qselect();
 
+多选的情况：在原生select上加上multiselect属性即可
+
 notice: 使用之前需要确保所选元素在页面存在，如果是页面selector动态生成的，需要生成后再调用
 
 author blog: 秋叶博客[https://www.mizuiren.com](https://www.mizuiren.com)
