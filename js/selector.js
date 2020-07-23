@@ -113,7 +113,7 @@
 				var $select = $('select.isSelecting');
 				var $box = $('#q-select-box');
 				if($(this).hasClass('selected')) {
-					if($select.attr('multiselect')) {
+					if($select.attr('multiselect') !== undefined) {
 						$(this).removeClass('selected');
 					}
 				} else {
