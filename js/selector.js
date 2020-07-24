@@ -76,23 +76,36 @@
 				var $container = $('<div id="q-select-box" style="z-index:2;position: fixed;min-width:' + width + 'px;"><div class="q-select-input-box" style="margin-top:-' + height + 'px;width:' + width + 'px"><input type="text" style="width: 100%;padding-right: 12px;height: ' + height + 'px;box-sizing:border-box;" class="q-select-input"><span class="icon" style="top:' + (height / 2) + 'px;left:' + (width - 12) + 'px"></span></div></div>');
 				var $list = $('<div class="q-select-list" style="max-height:500px;overflow:auto;"></div>');
 				var thisText = '', multiVal;
-				$(this).find('option').each(function() {
-					var value = $(this).attr('value');
+				function createItem($item, $parent) {
+					var value = $item.attr('value');
 					var _class = ['item', 't-overflow'];
-					var optionClass = ($(this).attr('class') || '').split(' ');
+					var optionClass = ($item.attr('class') || '').split(' ');
 					optionClass.forEach(function(_c) {
 						if(_class.indexOf(_c) === -1) {
 							_class.push(_c);
 						}
 					});
-					if(!$(this).hasClass('q-select-add') && $(this).css('display') !== 'none') {
-						$list.append('<div class="' + _class.join(' ') + '" value="' + value + '" title="'+$(this).text()+'">' + $(this).text() + '</div>');
+					if(!$item.hasClass('q-select-add') && $item.css('display') !== 'none') {
+						$parent.append('<div class="' + _class.join(' ') + '" value="' + value + '" title="'+$item.text()+'">' + $item.text() + '</div>');
 					} else {
 						multiVal = value;
 					}
-					if($(this).val() === thisVal) {
-						thisText = $(this).text();
+					if($item.val() === thisVal) {
+						thisText = $item.text();
 					}
+				}
+				$('> option, optgroup', $(this)).each(function() {
+					if(this.tagName === 'OPTGROUP') {
+						var $optgroup = $('<div class="optgroup"></div>');
+						var label = $(this).attr('label') || '';
+						$list.append('<div class="label">'+label+'</div>');
+						$('> option', $(this)).each(function() {
+							createItem($(this), $optgroup);
+						});
+						$list.append($optgroup);
+					} else {
+						createItem($(this), $list);
+					}	
 				});
 				
 				thisVal.split(',').forEach(function(_item) {

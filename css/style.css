@@ -5,9 +5,19 @@
 	font-size: 14px;
 	word-break: keep-all;
 }
+#q-select-box .q-select-list .label {
+	padding: 2px 6px;
+	box-sizing: border-box;
+	font-size: 14px;
+	word-break: keep-all;
+	font-weight: bold;
+}
 #q-select-box .q-select-list .item:hover, #q-select-box .q-select-list .item.selected {
 	background: rgb(230, 247, 255);
 	color: rgb(32, 148, 255);
+}
+#q-select-box .q-select-list .optgroup .item {
+	padding-left: 2em;
 }
 #q-select-box .q-select-list {
 	border: 1px solid #ccc;
