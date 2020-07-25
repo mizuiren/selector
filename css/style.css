@@ -5,12 +5,17 @@
 	font-size: 14px;
 	word-break: keep-all;
 }
+#q-select-box .q-select-list .item[disabled] {
+    pointer-events: none;
+    color: #ccc;
+}
 #q-select-box .q-select-list .label {
 	padding: 2px 6px;
 	box-sizing: border-box;
 	font-size: 14px;
 	word-break: keep-all;
 	font-weight: bold;
+	pointer-events: none;
 }
 #q-select-box .q-select-list .item:hover, #q-select-box .q-select-list .item.selected {
 	background: rgb(230, 247, 255);
