@@ -79,14 +79,15 @@
 				function createItem($item, $parent) {
 					var value = $item.attr('value');
 					var _class = ['item', 't-overflow'];
-					var optionClass = ($item.attr('class') || '').split(' ');
-					optionClass.forEach(function(_c) {
-						if(_class.indexOf(_c) === -1) {
-							_class.push(_c);
-						}
+					var attrs = $item[0].attributes, _attrs = [];
+					Array.prototype.slice.call(attrs).forEach(function(part){
+						_attrs.push(part.name + '="' + part.value + '"');
 					});
+
 					if(!$item.hasClass('q-select-add') && $item.css('display') !== 'none') {
-						$parent.append('<div class="' + _class.join(' ') + '" value="' + value + '" title="'+$item.text()+'">' + $item.text() + '</div>');
+						var item = $('<div ' + _attrs.join(' ') + ' title="'+$item.text()+'">' + $item.text() + '</div>');
+						item.addClass('item');
+						$parent.append(item);
 					} else {
 						multiVal = value;
 					}
