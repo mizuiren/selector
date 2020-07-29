@@ -73,7 +73,7 @@
 				$(this).addClass('isSelecting').css('opacity', 0);
 				var thisVal = $(this).val() || '';
 				$('#q-select-box').remove();
-				var $container = $('<div id="q-select-box" style="z-index:2;position: fixed;min-width:' + width + 'px;"><div class="q-select-input-box" style="margin-top:-' + height + 'px;width:' + width + 'px"><input type="text" style="width: 100%;padding-right: 12px;height: ' + height + 'px;box-sizing:border-box;" class="q-select-input"><span class="icon" style="top:' + (height / 2) + 'px;left:' + (width - 12) + 'px"></span></div></div>');
+				var $container = $('<div id="q-select-box" style="box-shadow:0 0 5px #a7a7a7;z-index:2;position: fixed;min-width:' + width + 'px;"><div class="q-select-input-box" style="margin-top:-' + height + 'px;width:' + width + 'px"><input type="text" style="width: 100%;padding-right: 12px;height: ' + height + 'px;box-sizing:border-box;" class="q-select-input"><span class="icon" style="top:' + (height / 2) + 'px;left:' + (width - 12) + 'px"></span></div></div>');
 				var $list = $('<div class="q-select-list" style="max-height:500px;overflow:auto;"></div>');
 				var thisText = '', multiVal;
 				function createItem($item, $parent) {
@@ -168,7 +168,7 @@
 				var val = $(this).val();
 				$('#q-select-box .q-select-list .item').each(function() {
 					var text = $(this).text();
-					if(text.indexOf(val.toLowerCase()) > -1 || text.indexOf(val.toUpperCase()) > -1) {
+					if(text.match(new RegExp(val, 'i'))) {
 						$(this).show();
 					} else {
 						$(this).hide();
