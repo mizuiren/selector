@@ -162,6 +162,9 @@
 					}
 				}
 				$('> option, optgroup', $(this)).each(function() {
+					if($(this).css('display') === 'none' && !$(this).hasClass('q-select-add')) {
+						return;
+					}
 					if(this.tagName === 'OPTGROUP') {
 						var $optgroup = $('<div class="optgroup"></div>');
 						var label = $(this).attr('label') || '';
