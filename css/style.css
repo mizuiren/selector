@@ -43,3 +43,55 @@
     -moz-transform: rotate(45deg);
     cursor: pointer;
 }
+#q-select-box .q-select-virtual {
+	max-width: 400px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+    background: #fff;
+    border-bottom: none;
+}
+#q-select-box .q-select-virtual span {
+    background: #ddd;
+    padding: 1px 3px;
+    font-size: 0.5em;
+    margin: 2px 2px 0 0;
+    color: green;
+    padding-right: 10px;
+    display: block;
+    float: left;
+    position: relative;
+}
+#q-select-box .q-select-virtual span i{
+	cursor: pointer;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    right: 1px;
+    top: 6px;
+}
+#q-select-box .q-select-virtual span i:hover {
+	transform: rotate(360deg);
+	transition: .5s;
+}
+#q-select-box .q-select-virtual span i:before, #q-select-box .q-select-virtual span i:after {
+	content: '';
+    position: absolute;
+    background: red;
+    width: 8px;
+    height: 1px;
+    left: 0px;
+    top: 3px;
+}
+#q-select-box .q-select-virtual span i:before {
+	transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+}
+#q-select-box .q-select-virtual span i:after {
+	transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+}
+#q-select-box .q-select-input-box input {
+	border: 1px solid #ccc;
+}
