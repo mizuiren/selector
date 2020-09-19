@@ -139,10 +139,10 @@
 				var width = $(this).outerWidth(), height = $(this).outerHeight();
 				$(this).addClass('isSelecting').css('opacity', 0);
 				var thisVal = $(this).val() || '';
+				var thisText = $(this).find('option[value="'+thisVal+'"]').length ? $(this).find('option[value="'+thisVal+'"]').text() : '';
 				$('#q-select-box').remove();
 				var $container = $('<div id="q-select-box" style="z-index:2;position: fixed;min-width:' + width + 'px;"><div class="q-select-input-box" style="margin-top:-' + height + 'px;width:' + width + 'px;"><input type="text" style="width: 100%;display: block;border: 1px solid #ccc;background: #fff;padding-right: 12px;height: ' + height + 'px;box-sizing:border-box;" class="q-select-input"><span class="icon" style="top:' + (height / 2 - 3) + 'px;left:' + (width - 12) + 'px"></span></div></div>');
 				var $list = $('<div class="q-select-list" style="box-shadow:0 0 5px #a7a7a7;max-height:500px;overflow:auto;"></div>');
-				var thisText = '', multiVal;
 				function createItem($item, $parent) {
 					var value = $item.attr('value');
 					var attrs = $item[0].attributes, _attrs = [];
@@ -154,8 +154,6 @@
 						var item = $('<div ' + _attrs.join(' ') + ' title="'+$item.text()+'">' + $item.text() + '</div>');
 						item.addClass('item t-overflow');
 						$parent.append(item);
-					} else {
-						multiVal = value;
 					}
 					if($item.val() === thisVal) {
 						thisText = $item.text();
@@ -179,7 +177,7 @@
 				});
 				
 				thisVal.split(',').forEach(function(_item) {
-					if(thisVal !== multiVal) {
+					if(!isMultiSelect) {
 						$list.find('.item').removeClass('selected');
 					}
 					$list.find('.item[value="'+_item+'"]').addClass('selected');
@@ -191,8 +189,9 @@
 				if(isMultiSelect) {
 					createMultiValList(thisVal, thisText);
 				} else {
-					$('#q-select-box .q-select-input').val(thisText).focus();
+					$('.q-select-input', $container).val(thisText);
 				}
+				$('.q-select-input', $container).focus();
 				resetPosition();
 				e.stopPropagation();
 			}).on('click.select', '.q-select-virtual span i', function(e) {
