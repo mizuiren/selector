@@ -195,15 +195,36 @@
 				resetPosition();
 				e.stopPropagation();
 			}).on('click.select', '.q-select-virtual span i', function(e) {
-				var val = $(this).parent().attr('value');
-				$('#q-select-box .q-select-list .item[value="'+val+'"]').trigger('mousedown.select');
+				var val = $(this).parent().attr('value'), text = $(this).parent().text();
+				var $option = $('#q-select-box .q-select-list .item[value="'+val+'"]');
+				var $select = $('select.isSelecting');
+				var isAddOption = false;
+				if(!$option.length) {
+					$option = $('<div value="'+val+'" class="item selected" style="display:none;">'+text+'</div>');
+					$select.append($option);
+					isAddOption = true;
+				}
+				$option.trigger('mousedown.select');
+				if(isAddOption) {
+					$option.remove();
+				}
 			}).on('mousedown.select', '#q-select-box .item', function(e) {
 				var $select = $('select.isSelecting');
 				var $box = $('#q-select-box');
 				var isMultiSelect = $select.attr('multiselect') !== undefined;
+				var texts = [], values = $select.val() === null || !isMultiSelect ? [] : $select.val().split(','), $option;
+				values.forEach(function(v) {
+					$option = $('option[value="'+ v +'"]', $select);
+					if($option.length) {
+						texts.push($option.text());
+					}
+				});
 				if($(this).hasClass('selected')) {
 					if($select.attr('multiselect') !== undefined) {
 						$(this).removeClass('selected');
+						var index = values.indexOf($(this).attr('value'));
+						values.splice(index, 1);
+						texts.splice(index, 1);
 					}
 				} else {
 					if($select.attr('multiselect') === undefined) {
@@ -212,11 +233,12 @@
 					$(this).addClass('selected');
 				}
 				
-				var texts = [], values = [];
 				$('.item.selected', $box).each(function() {
 					var text = $(this).text(), value = $(this).attr('value');
-					texts.push(text);
-					values.push(value);
+					if(values.indexOf(value) === -1) {
+						texts.push(text);
+						values.push(value);
+					}
 				});
 				
 				if(values.length > 1) {
@@ -225,7 +247,7 @@
 				}
 				$select.val(values.join(',')).trigger('change');
 				if(!isMultiSelect) {
-					$('.q-select-input', $box).val(texts.join(','));
+					$('.q-select-input', $box).val(values.join(','));
 				} else {
 					createMultiValList(values, texts);
 				}
