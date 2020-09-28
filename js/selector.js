@@ -196,13 +196,17 @@
 				e.stopPropagation();
 			}).on('click.select', '.q-select-virtual span i', function(e) {
 				var val = $(this).parent().attr('value'), text = $(this).parent().text();
-				var $option = $('#q-select-box .q-select-list .item[value="'+val+'"]');
-				var $select = $('select.isSelecting');
+				var $box = $('#q-select-box');
+				var $list = $('.q-select-list', $box);
+				var $option = $('.item[value="'+val+'"]', $list);
 				var isAddOption = false;
 				if(!$option.length) {
 					$option = $('<div value="'+val+'" class="item selected" style="display:none;">'+text+'</div>');
-					$select.append($option);
+					$list.append($option);
 					isAddOption = true;
+				}
+				if(!$option.hasClass('selected')) {
+					$option.addClass('selected');
 				}
 				$option.trigger('mousedown.select');
 				if(isAddOption) {
@@ -220,14 +224,14 @@
 					}
 				});
 				if($(this).hasClass('selected')) {
-					if($select.attr('multiselect') !== undefined) {
+					if(isMultiSelect) {
 						$(this).removeClass('selected');
 						var index = values.indexOf($(this).attr('value'));
 						values.splice(index, 1);
 						texts.splice(index, 1);
 					}
 				} else {
-					if($select.attr('multiselect') === undefined) {
+					if(!isMultiSelect) {
 						$('.q-select-list', $box).find('.item').removeClass('selected');
 					}
 					$(this).addClass('selected');
