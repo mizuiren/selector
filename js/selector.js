@@ -225,10 +225,14 @@
 				});
 				if($(this).hasClass('selected')) {
 					if(isMultiSelect) {
-						$(this).removeClass('selected');
 						var index = values.indexOf($(this).attr('value'));
-						values.splice(index, 1);
-						texts.splice(index, 1);
+						if(index > -1) {
+							if(values.length > 1) {
+								$(this).removeClass('selected');
+								values.splice(index, 1);
+								texts.splice(index, 1);
+							}
+						}
 					}
 				} else {
 					if(!isMultiSelect) {
