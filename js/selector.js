@@ -125,7 +125,7 @@
 	$.fn.extend({
 	    "qselect": function () {
 	    	var _this = this;
-	        $(document).off('mousedown.select').on('mousedown.select', 'select', function() {
+	        $(document).off('mouseup.select').on('mouseup.select', 'select', function() {
 	        	if(Array.prototype.indexOf.call(_this, this) === -1) {
 	        		return;
 	        	}
@@ -208,15 +208,15 @@
 				if(!$option.hasClass('selected')) {
 					$option.addClass('selected');
 				}
-				$option.trigger('mousedown.select');
+				$option.trigger('mouseup.select');
 				if(isAddOption) {
 					$option.remove();
 				}
-			}).on('mousedown.select', '#q-select-box .item', function(e) {
+			}).on('mouseup.select', '#q-select-box .item', function(e) {
 				var $select = $('select.isSelecting');
 				var $box = $('#q-select-box');
 				var isMultiSelect = $select.attr('multiselect') !== undefined;
-				var texts = [], values = $select.val() === null || !isMultiSelect ? [] : $select.val().split(','), $option;
+				var texts = [], values = $select.val() === null || !isMultiSelect ? [] : $select.val() ? $select.val().split(',') : [], $option;
 				values.forEach(function(v) {
 					$option = $('option[value="'+ v +'"]', $select);
 					if($option.length) {
@@ -227,11 +227,9 @@
 					if(isMultiSelect) {
 						var index = values.indexOf($(this).attr('value'));
 						if(index > -1) {
-							if(values.length > 1) {
-								$(this).removeClass('selected');
-								values.splice(index, 1);
-								texts.splice(index, 1);
-							}
+							$(this).removeClass('selected');
+							values.splice(index, 1);
+							texts.splice(index, 1);
 						}
 					}
 				} else {
@@ -249,7 +247,7 @@
 					}
 				});
 				
-				if(values.length > 1) {
+				if(isMultiSelect) {
 					$select.find('.q-select-add').remove();
 					$select.append('<option style="display:none;" class="q-select-add" value="' + values.join(',') + '">'+texts.join(',')+'</option>')
 				}
@@ -270,7 +268,7 @@
 					resetPosition();
 					e.stopPropagation();
 				}
-			}).on('mousedown.select', function(e) {
+			}).on('mouseup.select', function(e) {
 				if(!$(e.target).hasClass('q-select-input') && !$(e.target).hasClass('q-select-list') && !$(e.target).closest('.q-select-virtual').length) {
 					setTimeout(function() {
 						clearSelecting();
