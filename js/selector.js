@@ -130,6 +130,8 @@
 	        		return;
 	        	}
 	        	return false;
+	        }).off('mousedown.select').on('mousedown.select', 'select', function(e) {
+	        	e.preventDefault();
 	        }).off('click.select').on('click.select', 'select', function(e) {
 	        	if(Array.prototype.indexOf.call(_this, this) === -1) {
 	        		return;
