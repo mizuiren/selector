@@ -35,8 +35,8 @@
 #q-select-box .q-select-input-box span.icon {
 	position: absolute;
     border-left: 1px solid rgb(88, 161, 195);
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
     border-top: 1px solid rgb(88, 161, 195);
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
