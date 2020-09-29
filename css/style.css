@@ -94,4 +94,5 @@
 }
 #q-select-box .q-select-input-box input {
 	border: 1px solid #ccc;
+    padding-left: 3px;
 }
