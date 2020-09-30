@@ -101,6 +101,52 @@
 			});
 		}
 	}
+	function refreshQselectList($select, $listContainer) {
+		$listContainer.empty();
+		var thisVal = $select.val() || '';
+		var isMultiSelect = $select.attr('multiselect') !== undefined;
+		function createItem($item, $parent) {
+			var value = $item.attr('value');
+			var attrs = $item[0].attributes, _attrs = [];
+			Array.prototype.slice.call(attrs).forEach(function(part){
+				_attrs.push(part.name + '="' + part.value + '"');
+			});
+
+			if(!$item.hasClass('q-select-add') && $item.css('display') !== 'none') {
+				var item = $('<div ' + _attrs.join(' ') + ' title="'+$item.text()+'">' + $item.text() + '</div>');
+				item.addClass('item t-overflow');
+				$parent.append(item);
+			}
+			if($item.val() === thisVal) {
+				thisText = $item.text();
+			}
+		}
+		$('> option, optgroup', $select).each(function() {
+			if($(this).css('display') === 'none' && !$(this).hasClass('q-select-add')) {
+				return;
+			}
+			if(this.tagName === 'OPTGROUP') {
+				var $optgroup = $('<div class="optgroup"></div>');
+				var label = $(this).attr('label') || '';
+				$listContainer.append('<div class="label">'+label+'</div>');
+				$('> option', $(this)).each(function() {
+					createItem($(this), $optgroup);
+				});
+				$listContainer.append($optgroup);
+			} else {
+				createItem($(this), $listContainer);
+			}	
+		});
+		
+		thisVal.split(',').forEach(function(_item) {
+			if(!isMultiSelect) {
+				$listContainer.find('.item').removeClass('selected');
+			}
+			if((isMultiSelect && $select.find('.q-select-add').length) || !isMultiSelect) {
+				$listContainer.find('.item[value="'+_item+'"]').addClass('selected');
+			}
+		});
+	}
 	function createMultiValList(multiVal, multiText) {
 		var $box = $('#q-select-box');
 		var $inputBox = $('.q-select-input-box', $box);
@@ -145,46 +191,8 @@
 				$('#q-select-box').remove();
 				var $container = $('<div id="q-select-box" style="z-index:2;position: fixed;min-width:' + width + 'px;"><div class="q-select-input-box" style="margin-top:-' + height + 'px;width:' + width + 'px;"><input type="text" style="width: 100%;display: block;border: 1px solid #ccc;background: #fff;padding-right: 12px;height: ' + height + 'px;box-sizing:border-box;" class="q-select-input"><span class="icon" style="top:' + (height / 2 - 2) + 'px;left:' + (width - 12) + 'px"></span></div></div>');
 				var $list = $('<div class="q-select-list" style="box-shadow:0 0 5px #a7a7a7;max-height:500px;overflow:auto;"></div>');
-				function createItem($item, $parent) {
-					var value = $item.attr('value');
-					var attrs = $item[0].attributes, _attrs = [];
-					Array.prototype.slice.call(attrs).forEach(function(part){
-						_attrs.push(part.name + '="' + part.value + '"');
-					});
-
-					if(!$item.hasClass('q-select-add') && $item.css('display') !== 'none') {
-						var item = $('<div ' + _attrs.join(' ') + ' title="'+$item.text()+'">' + $item.text() + '</div>');
-						item.addClass('item t-overflow');
-						$parent.append(item);
-					}
-					if($item.val() === thisVal) {
-						thisText = $item.text();
-					}
-				}
-				$('> option, optgroup', $(this)).each(function() {
-					if($(this).css('display') === 'none' && !$(this).hasClass('q-select-add')) {
-						return;
-					}
-					if(this.tagName === 'OPTGROUP') {
-						var $optgroup = $('<div class="optgroup"></div>');
-						var label = $(this).attr('label') || '';
-						$list.append('<div class="label">'+label+'</div>');
-						$('> option', $(this)).each(function() {
-							createItem($(this), $optgroup);
-						});
-						$list.append($optgroup);
-					} else {
-						createItem($(this), $list);
-					}	
-				});
 				
-				thisVal.split(',').forEach(function(_item) {
-					if(!isMultiSelect) {
-						$list.find('.item').removeClass('selected');
-					}
-					$list.find('.item[value="'+_item+'"]').addClass('selected');
-				});
-				
+				refreshQselectList($(this), $list);
 				$container.append($list);
 
 				$(this).after($container);
