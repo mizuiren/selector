@@ -225,13 +225,11 @@
 				var $select = $('select.isSelecting');
 				var $box = $('#q-select-box');
 				var isMultiSelect = $select.attr('multiselect') !== undefined;
-				var texts = [], values = $select.val() === null || !isMultiSelect ? [] : $select.val() ? $select.val().split(',') : [], $option;
-				values.forEach(function(v) {
-					$option = $('option[value="'+ v +'"]', $select);
-					if($option.length) {
-						texts.push($option.eq(0).text());
-					}
-				});
+				var texts = [], val = $select.val(), values = val === null || !isMultiSelect ? [] : val ? val.split(',') : [], $option;
+				if(values.length) {
+					var $selectedOption = $select.find('option[value="'+val+'"]');
+					texts = $selectedOption.length ? $selectedOption.eq(0).text().split(',') : [];
+				}
 				if($(this).hasClass('selected')) {
 					if(isMultiSelect) {
 						var index = values.indexOf($(this).attr('value'));
