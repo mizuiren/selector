@@ -260,7 +260,7 @@
 				}
 				$select.val(values.join(',')).trigger('change');
 				if(!isMultiSelect) {
-					$('.q-select-input', $box).val(values.join(','));
+					$('.q-select-input', $box).val(texts.join(','));
 				} else {
 					createMultiValList(values, texts);
 				}
