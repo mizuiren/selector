@@ -285,6 +285,12 @@
 				}
 			}).off('input').on('input', '.q-select-input', function() {
 				var val = $(this).val();
+				var regTag = ['\\', '+', '[', ']','-', '/','{','}','.', '?', '$', '*', '^', '!'];//\\必须放第一个
+					regTag.forEach(function(tag) {
+						val = val.replace(new RegExp('\\' + tag, 'g'), function() {
+							return '\\' + tag;
+						});
+					});
 				$('#q-select-box .q-select-list .item').each(function() {
 					var text = $(this).text();
 					if(text.match(new RegExp(val, 'i'))) {
