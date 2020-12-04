@@ -299,7 +299,7 @@
 				$('#q-select-box').remove();
 				$('select.isSelecting').css('opacity', 1).removeClass('isSelecting');
 			}
-			$(window).on('resize.select, scroll.select', function() {
+			$('*:not(.q-select-list)', document).on('resize.select, scroll.select', function() {
 				clearSelecting();
 			});
 			return this;
