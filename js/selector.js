@@ -285,7 +285,7 @@
 				}
 			}).off('input').on('input', '.q-select-input', function() {
 				var val = $(this).val();
-				var regTag = ['\\', '+', '[', ']','-', '/','{','}','.', '?', '$', '*', '^', '!'];//\\必须放第一个
+				var regTag = ['\\', '+', '[', ']','-', '/','{','}','.', '?', '$', '*', '^', '!', '(', ')'];//\\必须放第一个
 					regTag.forEach(function(tag) {
 						val = val.replace(new RegExp('\\' + tag, 'g'), function() {
 							return '\\' + tag;
