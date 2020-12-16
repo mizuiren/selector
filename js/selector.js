@@ -261,11 +261,10 @@
 					$select.append('<option style="display:none;" class="q-select-add" value="' + values.join(',') + '">'+texts.join(',')+'</option>')
 				}
 				$select.val(values.join(','));
-				//触发jq的change事件
-				$select.trigger('change');
 				//触发原生的change事件
-				var event = new Event('change');
+				var event = new Event('change', {bubbles:true});
 				$select[0].dispatchEvent(event);
+
 				if(!isMultiSelect) {
 					$('.q-select-input', $box).val(texts.join(','));
 				} else {
