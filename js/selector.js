@@ -261,7 +261,7 @@
 					$select.find('.q-select-add').remove();
 					$select.append('<option style="display:none;" class="q-select-add" value="' + values.join(',') + '">'+texts.join(',')+'</option>')
 				}
-				var newVal = values.join(',');
+				var newVal = values.length ? values.join(',') : null;//多选的时候可能是null
 				$select.val(newVal);
 				//触发原生的change事件
 				if(oldVal !== newVal) {
