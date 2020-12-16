@@ -225,6 +225,7 @@
 				}
 			}).on('mouseup.select', '#q-select-box .item', function(e) {
 				var $select = $('select.isSelecting');
+				var oldVal = $select.val();
 				var $box = $('#q-select-box');
 				var isMultiSelect = $select.attr('multiselect') !== undefined;
 				var texts = [], val = $select.val(), values = val === null || !isMultiSelect ? [] : val ? val.split(',') : [], $option;
@@ -260,10 +261,13 @@
 					$select.find('.q-select-add').remove();
 					$select.append('<option style="display:none;" class="q-select-add" value="' + values.join(',') + '">'+texts.join(',')+'</option>')
 				}
-				$select.val(values.join(','));
+				var newVal = values.join(',');
+				$select.val(newVal);
 				//触发原生的change事件
-				var event = new Event('change', {bubbles:true});
-				$select[0].dispatchEvent(event);
+				if(oldVal !== newVal) {
+					var event = new Event('change', {bubbles:true});
+					$select[0].dispatchEvent(event);
+				}
 
 				if(!isMultiSelect) {
 					$('.q-select-input', $box).val(texts.join(','));
