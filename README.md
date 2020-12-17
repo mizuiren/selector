@@ -14,6 +14,10 @@
 
 ### 搜索列表
 
+默认不开启搜索
+
+开启：在原生select上加上searchable属性即可
+
 ### 多选功能
 
 使用：$('select').qselect();

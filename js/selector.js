@@ -190,10 +190,15 @@
 				$('#q-select-box').remove();
 				var selectAlign = $(this).css('text-align-last') || 'left';
 				var align = 'text-align:' + (selectAlign === 'end' || selectAlign === 'right' ? 'right' : selectAlign === 'start' || selectAlign === 'left' || selectAlign === 'auto' ? 'left' : 'center');
-				var $container = $('<div id="q-select-box" style="z-index:9999;position: fixed;min-width:' + width + 'px;"><div class="q-select-input-box" style="margin-top:-' + height + 'px;width:' + width + 'px;"><input type="text" style="width: 100%;display: block;border: 1px solid #ccc;background: #fff;padding-right: 15px;height: ' + height + 'px;box-sizing:border-box;'+align+'" class="q-select-input"><span class="icon" style="top:' + (height / 2 - Math.sqrt(2)) + 'px;left:' + (width - 15) + 'px"></span></div></div>');
-				var $list = $('<div class="q-select-list" style="box-shadow:0 0 5px #a7a7a7;max-height:500px;overflow:auto;"></div>');
+				var border = 'border: ' + $(this).css('borderWidth') + ' solid ' + $(this).css('borderColor') + ';'
+				var $container = $('<div id="q-select-box" style="z-index:9999;position: fixed;min-width:' + width + 'px;">'+
+					'<div class="q-select-input-box" style="margin-top:-' + height + 'px;width:' + width + 'px;">'+
+					'<input readonly type="text" style="' + border + 'height: ' + height + 'px;' + align + '" class="q-select-input">'+
+					'<span class="icon" style="top:' + (height / 2 - Math.sqrt(2)) + 'px;left:' + (width - 15) + 'px"></span>'+
+					'</div></div>');
+				var $list = $('<div class="q-select-list" style="box-shadow:0 0 5px #a7a7a7;max-height:500px;overflow:auto;">'+($(this).attr('searchable') !== undefined ? '<div style="text-align:center;"><input class="q-search-input"></div>' : '')+'<div class="list"></div></div>');
 				
-				refreshQselectList($(this), $list);
+				refreshQselectList($(this), $list.find('.list'));
 				$container.append($list);
 
 				$(this).after($container);
@@ -202,7 +207,7 @@
 				} else {
 					$('.q-select-input', $container).val(thisText);
 				}
-				$('.q-select-input', $container).focus();
+				$('.q-search-input', $container).focus();
 				resetPosition();
 				e.stopPropagation();
 			}).on('click.select', '.q-select-virtual span i', function(e) {
@@ -286,12 +291,12 @@
 					e.stopPropagation();
 				}
 			}).on('mouseup.select', function(e) {
-				if(!$(e.target).hasClass('q-select-input') && !$(e.target).hasClass('q-select-list') && !$(e.target).closest('.q-select-virtual').length) {
+				if(!$(e.target).hasClass('q-search-input') && !$(e.target).hasClass('q-select-list') && !$(e.target).closest('.q-select-virtual').length) {
 					setTimeout(function() {
 						clearSelecting();
 					});
 				}
-			}).off('input').on('input', '.q-select-input', function() {
+			}).off('input').on('input', '.q-search-input', function() {
 				var val = $(this).val();
 				var regTag = ['\\', '+', '[', ']','-', '/','{','}','.', '?', '$', '*', '^', '!', '(', ')'];//\\必须放第一个
 					regTag.forEach(function(tag) {

@@ -92,7 +92,19 @@
     -webkit-transform: rotate(-45deg);
     -moz-transform: rotate(-45deg);
 }
-#q-select-box .q-select-input-box input {
-	border: 1px solid #ccc;
+#q-select-box .q-select-input {
     padding-left: 3px;
+    outline: none;
+    background: #fff;
+    padding-right: 15px;
+    box-sizing:border-box;
+    display: block;
+    width: 100%;
+}
+#q-select-box .q-search-input {
+    width: 90%;
+    display: inline-block;
+    margin: 5px auto;
+    padding-left: 2px;
+    border-radius: none;
 }
