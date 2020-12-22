@@ -137,14 +137,15 @@
 			}
 		});
 		$listContainer.html(html);
-		thisVal.split(',').forEach(function(_item) {
-			if(!isMultiSelect) {
-				$listContainer.find('.item').removeClass('selected');
-			}
-			if((isMultiSelect && $select.find('.q-select-add').length) || !isMultiSelect) {
+		thisVal = thisVal.split(',');
+		$listContainer.find('.item').removeClass('selected');
+		if(isMultiSelect) {
+			thisVal.forEach(function(_item) {
 				$listContainer.find('.item[value="'+_item+'"]').addClass('selected');
-			}
-		});
+			});
+		} else {
+			$listContainer.find('.item[value="' + thisVal[0] + '"]').addClass('selected');
+		}
 	}
 	function createMultiValList(multiVal, multiText) {
 		var $box = $('#q-select-box');
