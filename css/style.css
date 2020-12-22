@@ -100,6 +100,7 @@
     box-sizing:border-box;
     display: block;
     width: 100%;
+    cursor: default;
 }
 #q-select-box .q-search-input {
     width: 90%;
@@ -107,4 +108,8 @@
     margin: 5px auto;
     padding-left: 2px;
     border-radius: none;
+    border:1px solid #ccc;
+    outline:none;
+    height: 24px;
+    box-sizing: border-box;
 }

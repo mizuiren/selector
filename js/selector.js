@@ -318,7 +318,13 @@
 				$('#q-select-box').remove();
 				$('select.isSelecting').css('opacity', 1).removeClass('isSelecting');
 			}
-			$('*:not(.q-select-list)', document).on('resize.select, scroll.select', function() {
+			$('*:not(.q-select-list)', document).off('resize.select scroll.select').on('resize.select scroll.select', function() {
+				clearSelecting();
+			});
+			$(window).off('resize.select scroll.select').on('resize.select scroll.select', function() {
+				clearSelecting();
+			});
+			$(window).off('blur.select').on('blur.select', function() {
 				clearSelecting();
 			});
 			return this;
