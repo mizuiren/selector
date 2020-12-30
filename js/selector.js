@@ -197,7 +197,7 @@
 					'<input readonly type="text" style="' + border + 'height: ' + height + 'px;' + align + '" class="q-select-input">'+
 					'<span class="icon" style="top:' + (height / 2 - Math.sqrt(2)) + 'px;left:' + (width - 15) + 'px"></span>'+
 					'</div></div>');
-				var $list = $('<div class="q-select-list" style="box-shadow:0 0 5px #a7a7a7;max-height:500px;overflow:auto;">'+($(this).attr('searchable') !== undefined ? '<div style="text-align:center;"><input class="q-search-input"></div>' : '')+'<div class="list"></div></div>');
+				var $list = $('<div class="q-select-list" style="box-shadow:0 0 5px #a7a7a7;max-height:500px;overflow:auto;">'+($(this).attr('searchable') !== undefined ? '<div style="text-align:center;position:relative;"><input class="q-search-input"><span class="clear" style="display: none;"></span></div>' : '')+'<div class="list"></div></div>');
 				
 				refreshQselectList($(this), $list.find('.list'));
 				$container.append($list);
@@ -229,6 +229,8 @@
 				if(isAddOption) {
 					$option.remove();
 				}
+			}).on('click.select', '.clear', function(e) {
+				$('.q-search-input').val('').trigger('input');
 			}).on('mouseup.select', '#q-select-box .item', function(e) {
 				var $select = $('select.isSelecting');
 				var oldVal = $select.val();
@@ -292,7 +294,7 @@
 					e.stopPropagation();
 				}
 			}).on('mouseup.select', function(e) {
-				if(!$(e.target).hasClass('q-search-input') && !$(e.target).hasClass('q-select-list') && !$(e.target).closest('.q-select-virtual').length) {
+				if(!$(e.target).hasClass('clear') && !$(e.target).hasClass('q-search-input') && !$(e.target).hasClass('q-select-list') && !$(e.target).closest('.q-select-virtual').length) {
 					setTimeout(function() {
 						clearSelecting();
 					});
@@ -313,6 +315,11 @@
 						$(this).hide();
 					}
 				});
+				if(val) {
+					$(this).siblings('.clear').show();
+				} else {
+					$(this).siblings('.clear').hide();
+				}
 				resetPosition();
 			});
 			function clearSelecting() {

@@ -107,9 +107,32 @@
     display: inline-block;
     margin: 5px auto;
     padding-left: 2px;
-    border-radius: none;
+    border-radius: 0;
     border:1px solid #ccc;
     outline:none;
     height: 20px;
     box-sizing: border-box;
+    padding-right: 13px;
+}
+#q-select-box .clear {
+    position: absolute;
+    top: 9px;
+    right: 6%;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+}
+#q-select-box .clear:before, #q-select-box .clear:after {
+    content: '';
+    position: absolute;
+    border-top: 1px solid #ccc;
+    top: 5px;
+    width: 100%;
+    right:0;
+}
+#q-select-box .clear:before {
+    transform: rotate(-45deg);
+}
+#q-select-box .clear:after {
+    transform: rotate(45deg);
 }
