@@ -90,6 +90,7 @@
 			
 			$('.q-select-input-box', $container).css({
 				'right': 0,
+				'float': 'right'
 			});
 		} else {
 			//朝右
