@@ -89,7 +89,7 @@
 			});
 			
 			$('.q-select-input-box', $container).css({
-				'float': 'right',
+				'right': 0,
 			});
 		} else {
 			//朝右
@@ -332,9 +332,9 @@
 			$(window).off('resize.select scroll.select').on('resize.select scroll.select', function() {
 				clearSelecting();
 			});
-			$(window).off('blur.select').on('blur.select', function() {
+			/*$(window).off('blur.select').on('blur.select', function() {
 				clearSelecting();
-			});
+			});*/
 			return this;
 	    }
 	});
