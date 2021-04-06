@@ -116,9 +116,12 @@
 			});
 			var html = '';
 			if(!$item.hasClass('q-select-add') && $item.css('display') !== 'none') {
-				html += '<div ' + _attrs.join(' ') + ' title="'+$item.text()+'">' + $item.text() + '</div>';
+				html += '<div ' + _attrs.join(' ') + ' title="'+htmlEncode($item.text())+'">' + htmlEncode($item.text()) + '</div>';
 			}
 			return html;
+		}
+		function htmlEncode(value) {
+			return $('<div/>').text(value).html();
 		}
 		var html = '';
 		$('> option, optgroup', $select).each(function() {
