@@ -4,10 +4,11 @@
 	 * [description]
 	 * @return {[type]} [description]
 	 */
+	var filterTimer = null; 
 	function resetPosition(recurrence) {
 		var $container = $('#q-select-box');
 		var $select = $('select.isSelecting').eq(0);
-		var $list = $('.q-select-list', $container);
+		var $list = $('.q-select-list .list', $container);
 		var $virtual = $('.q-select-virtual', $container), virtualHeight = 0, virtualWidth = 0;
 		var screenHeight = $(window).height(), screenWidth = $(window).width(), scrollTop = $(document).scrollTop(), scrollLeft = $(document).scrollLeft();
 		var $input = $('.q-select-input-box input', $container);
@@ -37,12 +38,14 @@
 			}
 			$('.q-select-input-box', $container).css({
 				'position': 'absolute',
-				'bottom': -(height + 2 + virtualHeight) + 'px'
+				'bottom': -(height + virtualHeight) + 'px'
 			});
 			$('.q-select-input-box', $container).css('height', height + 'px');
 			if(!recurrence) {
 				if(positionY - boxHeight < scrollTop) {
-					$list.css('max-height', positionY - scrollTop);
+					var $searchInput = $('.q-search-input', $container);
+					var searchInputHeight = $searchInput.length ? $searchInput.parent().outerHeight() : 0;
+					$list.css('max-height', positionY - scrollTop - searchInputHeight);
 				}
 				resetPosition(true);
 			}
@@ -202,7 +205,7 @@
 					'<input readonly type="text" style="' + border + 'height: ' + height + 'px;' + align + '" class="q-select-input">'+
 					'<span class="icon" style="top:' + (height / 2 - Math.sqrt(2)) + 'px;left:' + (width - 15) + 'px"></span>'+
 					'</div></div>');
-				var $list = $('<div class="q-select-list" style="box-shadow:0 0 5px #a7a7a7;max-height:500px;overflow:auto;">'+($(this).attr('searchable') !== undefined ? '<div style="text-align:center;position:relative;"><input class="q-search-input"><span class="clear" style="display: none;"></span></div>' : '')+'<div class="list"></div></div>');
+				var $list = $('<div class="q-select-list" style="box-shadow:0 0 5px #a7a7a7;">'+($(this).attr('searchable') !== undefined ? '<div style="text-align:center;position:relative;"><input class="q-search-input"><span class="clear" style="display: none;"></span></div>' : '')+'<div class="list" style="overflow:auto;"></div></div>');
 				
 				refreshQselectList($(this), $list.find('.list'));
 				$container.append($list);
@@ -305,27 +308,37 @@
 					});
 				}
 			}).off('input').on('input', '.q-search-input', function() {
-				var val = $(this).val();
-				var regTag = ['\\', '+', '[', ']','-', '/','{','}','.', '?', '$', '*', '^', '!', '(', ')'];//\\必须放第一个
-					regTag.forEach(function(tag) {
-						val = val.replace(new RegExp('\\' + tag, 'g'), function() {
-							return '\\' + tag;
-						});
-					});
-				$('#q-select-box .q-select-list .item').each(function() {
-					var text = $(this).text();
-					if(text.match(new RegExp(val, 'i'))) {
-						$(this).show();
-					} else {
-						$(this).hide();
-					}
-				});
-				if(val) {
-					$(this).siblings('.clear').show();
-				} else {
-					$(this).siblings('.clear').hide();
+				var _this = this;
+				if(filterTimer) {
+					clearTimeout(filterTimer);
 				}
-				resetPosition();
+				filterTimer = setTimeout(function() {
+					doFilter();
+				}, 200);
+				
+				function doFilter() {
+					var val = $(_this).val();
+					var regTag = ['\\', '+', '[', ']','-', '/','{','}','.', '?', '$', '*', '^', '!', '(', ')'];//\\必须放第一个
+						regTag.forEach(function(tag) {
+							val = val.replace(new RegExp('\\' + tag, 'g'), function() {
+								return '\\' + tag;
+							});
+						});
+					$('#q-select-box .q-select-list .item').each(function() {
+						var text = $(this).text();
+						if(text.match(new RegExp(val, 'i'))) {
+							$(this).show();
+						} else {
+							$(this).hide();
+						}
+					});
+					if(val) {
+						$(_this).siblings('.clear').show();
+					} else {
+						$(_this).siblings('.clear').hide();
+					}
+					resetPosition();
+				}
 			});
 			function clearSelecting() {
 				$('#q-select-box').remove();
