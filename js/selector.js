@@ -186,6 +186,7 @@
 	        	if(Array.prototype.indexOf.call(_this, this) === -1) {
 	        		return;
 	        	}
+	        	window.focus();
 	        	var isMultiSelect = $(this).attr('multiselect') !== undefined;
 	        	clearSelecting();
 				var width = $(this).outerWidth(), height = $(this).outerHeight();
