@@ -191,6 +191,7 @@
 	        	}
 	        	window.focus();
 	        	var isMultiSelect = $(this).attr('multiselect') !== undefined;
+	        	var isFixWidth = $(this).attr('fixwidth') !== undefined;
 	        	clearSelecting();
 				var width = $(this).outerWidth(), height = $(this).outerHeight();
 				$(this).addClass('isSelecting').css('opacity', 0);
@@ -200,7 +201,7 @@
 				var selectAlign = $(this).css('text-align-last') || 'left';
 				var align = 'text-align:' + (selectAlign === 'end' || selectAlign === 'right' ? 'right' : selectAlign === 'start' || selectAlign === 'left' || selectAlign === 'auto' ? 'left' : 'center');
 				var border = 'border: ' + $(this).css('borderWidth') + ' solid ' + $(this).css('borderColor') + ';'
-				var $container = $('<div id="q-select-box" style="z-index:9999;position: fixed;min-width:' + width + 'px;">'+
+				var $container = $('<div id="q-select-box" style="z-index:9999;position: fixed;min-width:' + width + 'px;'+(isFixWidth ? "width:" + width + "px;":'')+'">'+
 					'<div class="q-select-input-box" style="margin-top:-' + height + 'px;width:' + width + 'px;">'+
 					'<input readonly type="text" style="' + border + 'height: ' + height + 'px;' + align + '" class="q-select-input">'+
 					'<span class="icon" style="top:' + (height / 2 - Math.sqrt(2)) + 'px;left:' + (width - 15) + 'px"></span>'+
