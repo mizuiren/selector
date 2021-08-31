@@ -28,6 +28,11 @@
 		var boxWidth = $container.outerWidth(), boxHeight = $container.outerHeight();
 		if(boxHeight + positionY + height > screenHeight + scrollTop) {
 			//朝上
+			var _top = positionY - scrollTop - boxHeight - virtualHeight;
+			if(_top < 0) {
+				$('#q-select-box .q-select-list').height(boxHeight - Math.abs(_top) - 2);
+				_top = 0;
+			}
 			$container.css({
 				'top': (positionY - scrollTop - boxHeight - virtualHeight) + 'px'
 			});
