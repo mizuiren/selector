@@ -308,7 +308,7 @@
 					e.stopPropagation();
 				}
 			}).on('mouseup.select', function(e) {
-				if(!$(e.target).hasClass('clear') && !$(e.target).hasClass('q-search-input') && !$(e.target).hasClass('q-select-list') && !$(e.target).closest('.q-select-virtual').length) {
+				if(!$(e.target).hasClass('clear') && !$(e.target).hasClass('q-search-input') && !$(e.target).hasClass('q-select-list') && !$(e.target).hasClass('list') && !$(e.target).closest('.q-select-virtual').length) {
 					setTimeout(function() {
 						clearSelecting();
 					});
