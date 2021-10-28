@@ -275,7 +275,7 @@
 					var text = $(this).text(), value = $(this).attr('value');
 					if(values.indexOf(value) === -1) {
 						texts.push(text);
-						values.push(value);
+						values.push(htmlEncode(value));
 					}
 				});
 				
