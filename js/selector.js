@@ -4,6 +4,13 @@
 	 * [description]
 	 * @return {[type]} [description]
 	 */
+	function htmlEncode(html){
+        var temp = document.createElement ("div");
+        (temp.textContent != undefined ) ? (temp.textContent = html) : (temp.innerText = html);
+        var output = temp.innerHTML;
+        temp = null;
+        return output;
+    }
 	var filterTimer = null; 
 	function resetPosition(recurrence) {
 		var $container = $('#q-select-box');
@@ -250,7 +257,7 @@
 				var oldVal = $select.val();
 				var $box = $('#q-select-box');
 				var isMultiSelect = $select.attr('multiselect') !== undefined;
-				var texts = [], val = $select.val(), values = val === null || !isMultiSelect ? [] : val ? val.split(',') : [], $option;
+				var texts = [], val = $select.val(), values = val === null || !isMultiSelect ? [] : val !== 'null' ? val.split(',') : [], $option;
 				if(values.length) {
 					var $selectedOption = $select.find('option[value="'+val+'"]');
 					texts = $selectedOption.length ? $selectedOption.eq(0).text().split(',') : [];
@@ -281,9 +288,11 @@
 				
 				if(isMultiSelect) {
 					$select.find('.q-select-add').remove();
-					$select.append('<option style="display:none;" class="q-select-add" value="' + values.join(',') + '">'+texts.join(',')+'</option>')
+					var multiValue = values.join(',');
+					multiValue = multiValue || 'null';
+					$select.append('<option style="display:none;" class="q-select-add" value="' + multiValue + '">'+texts.join(',')+'</option>');
 				}
-				var newVal = values.length ? values.join(',') : null;//多选的时候可能是null
+				var newVal = values.length ? values.join(',') : 'null';//多选的时候可能是null
 				$select.val(newVal);
 				//触发原生的change事件
 				if(oldVal !== newVal) {
